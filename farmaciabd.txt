@@ -52,3 +52,6 @@ begin
 	select  *from usuario 
     where nombre like concat('%',buscar,'%') or apellidoPaterno like concat('%',buscar,'%') or apellidoMaterno like concat('%',buscar,'%');
 end $
+
+
+//ESTO ES UNA PRUEBA DE SARAH :)
