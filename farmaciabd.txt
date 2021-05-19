@@ -1,0 +1,54 @@
+create database farmaciabd;
+use farmaciabd;
+
+create table usuario(
+id_usuario int AUTO_INCREMENT PRIMARY KEY,
+nombre varchar(30),
+apellidoPaterno varchar(40),
+apellidoMaterno varchar(40),
+contraseña varchar(20),
+telefono varchar(20),
+fechaNacimiento date,
+correo varchar(50));
+
+DELIMITER $
+CREATE PROCEDURE guardarUsuario(
+    in nom varchar(30),
+    in apeP varchar(40),
+    in apeM varchar(40),
+    in con varchar (20),
+    in tel varchar (20),
+    in fec date,
+    in cor varchar (50))
+begin
+	insert into usuario(nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono, fechaNacimiento, correo) values(id, nom, apeP, apeM, con, tel, fec, cor);
+end $
+
+DELIMITER $
+CREATE PROCEDURE modificarUsuario(
+    in id int,
+    in nom varchar(30),
+    in apeP varchar(40),
+    in apeM varchar(40),
+    in con varchar (20),
+    in tel varchar (20),
+    in fec date,
+    in cor varchar (50))
+begin
+	update usuario set nombre=nom, apellidoPaterno=apeP, apellidoMaterno=apeM, empresa=emp, contraseña=con, telefono=tel, fechaNacimiento= fec, correo = cor
+    where id_usuario=id;
+end $
+
+DELIMITER $
+CREATE PROCEDURE eliminarUsuario(in id_us int)
+begin
+	delete from usuario 
+    where id_usuario=id_us;
+end $
+
+DELIMITER $
+CREATE PROCEDURE buscarUsuario(in buscar varchar(30))
+begin
+	select  *from usuario 
+    where nombre like concat('%',buscar,'%') or apellidoPaterno like concat('%',buscar,'%') or apellidoMaterno like concat('%',buscar,'%');
+end $
