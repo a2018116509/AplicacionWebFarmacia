@@ -11,6 +11,22 @@ telefono varchar(20),
 fechaNacimiento date,
 correo varchar(50));
 
+create table laboratorio(
+id_laboratorio int primary key auto_increment,
+nombre varchar(40)
+);
+
+create table medicamento(
+id_medicamento int primary key auto_increment,
+nombremed varchar(40),
+descripcion varchar(40),
+precio float,
+accionTerapeutica varchar(40),
+fechaVencimiento date,
+id_laboratorio int,
+foreign key (id_laboratorio) references laboratorio(id_laboratorio)
+);
+
 DELIMITER $
 CREATE PROCEDURE guardarUsuario(
     in nom varchar(30),
@@ -21,7 +37,7 @@ CREATE PROCEDURE guardarUsuario(
     in fec date,
     in cor varchar (50))
 begin
-	insert into usuario(nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono, fechaNacimiento, correo) values(id, nom, apeP, apeM, con, tel, fec, cor);
+	insert into usuario(nombre, apellidoPaterno, apellidoMaterno, contraseña, telefono, fechaNacimiento, correo) values(nom, apeP, apeM, con, tel, fec, cor);
 end $
 
 DELIMITER $
@@ -35,7 +51,7 @@ CREATE PROCEDURE modificarUsuario(
     in fec date,
     in cor varchar (50))
 begin
-	update usuario set nombre=nom, apellidoPaterno=apeP, apellidoMaterno=apeM, empresa=emp, contraseña=con, telefono=tel, fechaNacimiento= fec, correo = cor
+	update usuario set nombre=nom, apellidoPaterno=apeP, apellidoMaterno=apeM, contraseña=con, telefono=tel, fechaNacimiento= fec, correo = cor
     where id_usuario=id;
 end $
 
@@ -54,4 +70,85 @@ begin
 end $
 
 
-//ESTO ES UNA PRUEBA DE SARAH :)
+//procedimiento para Laboratorio
+delimiter $
+create procedure guardarLaboratorio(
+in nom varchar(40)
+)
+begin
+	insert into laboratorio (nombre) values(nom);
+end $
+
+delimiter $
+create procedure buscarLaboratorio(in buscar varchar(40))
+begin	
+	select *from laboratorio where nombre like concat('%',buscar,'%');
+end $
+
+
+delimiter $
+create procedure listarLaboratorio(
+)
+begin
+	select *from laboratorio;
+end $
+delimiter $
+create procedure modificarLaboratorio(
+in id_l int,
+in nom varchar (40)
+)
+begin 
+update laboratorio set nombre=nom
+where id_laboratorio=id_l;
+end $
+
+delimiter $
+create procedure eliminarLaboratorio (
+in id_l int
+)
+begin
+delete from laboratorio where id_laboratorio=id_l;
+
+end $
+//procedimiento para Medicamento
+delimiter $
+create procedure guardarMedicamento(
+in nomd varchar(40),
+in des varchar(40),
+in pre float,
+in acc varchar(40),
+in fec date,
+in id_l int
+)
+begin
+	insert into medicamento (nombremed, descripcion, precio, accionTerapeutica, fechaVencimiento, id_laboratorio) values( nomd, des, pre, acc, fec, id_l);
+end $
+
+delimiter $
+create procedure modificarMedicamento(
+in id_m int,
+in nomd varchar(40),
+in des varchar(40),
+in pre float,
+in acc varchar(40),
+in fec date,
+in id_l int 
+)
+begin
+	update medicamento set nombremed=nomd, descripcion=des, precio=pre, accionTerapeutica=acc, fechaVencimiento=fec, id_laboratorio=id_l
+	where id_medicamento=id_m;
+end $
+
+delimiter $
+create procedure eliminarMedicamento(in id_m int)
+begin
+delete from medicamento where id_medicamento=id_m;
+end $
+
+delimiter $
+create procedure buscarMedicamento(in buscar varchar(40))
+begin
+select id_medicamento, nombremed, descripcion, precio, accionTerapeutica, fechaVencimiento, laboratorio.nombre
+from laboratorio inner join medicamento on laboratorio.id_laboratorio = medicamento.id_laboratorio
+where descripcion like concat('%',buscar,'%');
+end $
