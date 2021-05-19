@@ -16,7 +16,7 @@ namespace capaDatos
         {
             this.servidor = "localhost";
             this.usuario = "root";
-            this.password = "fanta2212";
+            this.password = "1234";
             this.basedatos = "farmaciabd";
             this.cmd = new MySqlCommand();
         }
@@ -86,6 +86,14 @@ namespace capaDatos
             da.Fill(DtResultado);
             this.desconectar();
             return DtResultado;
+        }
+        public void parametroDecimal(decimal valor, string param)
+        {
+            MySqlParameter Par = new MySqlParameter();
+            Par.ParameterName = param;
+            Par.MySqlDbType = MySqlDbType.Decimal;
+            Par.Value = valor;
+            cmd.Parameters.Add(Par);
         }
     }
 }

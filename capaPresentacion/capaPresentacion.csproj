@@ -67,10 +67,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="frmLaboratorio.aspx" />
+    <Content Include="frmMedicamento.aspx" />
     <Content Include="frmUsuario.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmLaboratorio.aspx.cs">
+      <DependentUpon>frmLaboratorio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmLaboratorio.aspx.designer.cs">
+      <DependentUpon>frmLaboratorio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmMedicamento.aspx.cs">
+      <DependentUpon>frmMedicamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmMedicamento.aspx.designer.cs">
+      <DependentUpon>frmMedicamento.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmUsuario.aspx.cs">
       <DependentUpon>frmUsuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
