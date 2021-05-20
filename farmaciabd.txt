@@ -27,6 +27,27 @@ id_laboratorio int,
 foreign key (id_laboratorio) references laboratorio(id_laboratorio)
 );
 
+create table pedido(
+id_pedido int auto_increment primary key,
+fecha date,
+total float not null,
+id_usuario int,
+foreign key(id_usuario) references usuario(id_usuario));
+						
+	
+create table detallePedido(
+id_pedido int,
+id_medicamento int,
+cantidad int,
+primary key(id_pedido, id_medicamento),
+foreign key (id_pedido) references pedido(id_pedido),
+foreign key (id_medicamento) references medicamento (id_medicamento)
+);
+
+
+
+
+
 DELIMITER $
 CREATE PROCEDURE guardarUsuario(
     in nom varchar(30),
@@ -150,5 +171,90 @@ create procedure buscarMedicamento(in buscar varchar(40))
 begin
 select id_medicamento, nombremed, descripcion, precio, accionTerapeutica, fechaVencimiento, laboratorio.nombre
 from laboratorio inner join medicamento on laboratorio.id_laboratorio = medicamento.id_laboratorio
-where descripcion like concat('%',buscar,'%');
+where nombremed like concat('%',buscar,'%');
 end $
+
+
+//procedimientos de pedidos
+DELIMITER $
+CREATE PROCEDURE guardarpedido(
+    in fech date,
+    in tot float,
+    in id_us int)
+begin
+    insert into pedido(fecha, total, id_usuario) values(fech, tot, id_us);
+end $
+DELIMITER $
+CREATE PROCEDURE modificarpedido(
+    in id_p int,
+    in fech date,
+    in tot float,
+    in id_us int)
+begin
+	update pedido set fecha=fech, total=tot, id_usuario=id_us
+    where id_pedido=id_p;
+end $
+
+DELIMITER $
+CREATE PROCEDURE eliminarpedido(in id_p int)
+begin
+    delete from pedido 
+    where id_pedido=id_p;
+end $
+DELIMITER $
+CREATE PROCEDURE buscarpedido(in buscar varchar(30))
+begin
+	
+	select p.id_pedido, p.fecha, p.total, concat_ws(' ',u.nombre, u.apellidoPaterno) as usuario
+    from pedido p inner join usuario u on u.id_usuario=p.id_usuario
+    where concat_ws(' ',u.nombre, u.apellidoPaterno) like concat('%',buscar,'%');
+end $
+
+DELIMITER $
+CREATE PROCEDURE guardarDetallepedido(
+	in id_m int, 
+	in cant int)
+begin
+ 	declare id_p int;
+    set id_p=(select MAX(pedido.id_pedido) from pedido);
+    insert into detallepedido values(id_p, id_m, cant);
+    
+    /*aqui se altera el stock*/
+end $
+
+DELIMITER $
+CREATE PROCEDURE eliminarDetallepedido(in id_p int)
+begin
+    delete from detallepedido 
+    where detallepedido.id_pedido=id_p;
+end $
+
+DELIMITER $
+CREATE PROCEDURE buscarDetallepedido(in id_p int)
+begin
+	select dp.id_medicamento, m.descripcion, m.precio, dp.cantidad
+    from detallepedido dp inner join medicamento m on dp.id_medicamento = m.id_medicamento
+    where dp.id_pedido = id_p;
+end $
+DELIMITER $
+CREATE PROCEDURE buscarusuariopedido(in id_p int)
+begin
+    select p.id_usuario from pedido p
+    where p.id_pedido= id_p;
+end $
+
+
+/*ALTERAR ESTO
+DELIMITER $
+CREATE TRIGGER modificarStock 
+BEFORE DELETE ON detallepedido 
+FOR EACH ROW
+BEGIN
+ UPDATE medicamento p
+    JOIN detallepedido dv
+    ON dv.id_medicamento = p.id_medicamento
+    SET p.stock = p.stock + dv.cantidad
+    WHERE dv.id_medicamento = OLD.id_medicamento
+    and dv.id_pedido=OLD.id_pedido;
+END $
+*/
