@@ -26,10 +26,11 @@
 </head>
 <body>
     <center>
-        <a href="frmLaboratorio.aspx">Laboratorio</a>&nbsp;
-        <a href="frmMedicamento.aspx">Medicamentos</a>&nbsp;
-        <a href="frmUsuario.aspx">Usuarios</a>&nbsp;
-        <a href="frmPedido.aspx">Pedidos</a>
+    <a href="frmLaboratorio.aspx">Laboratorios</a>&nbsp;
+    <a href="frmMedicamento.aspx">Medicamentos</a>
+    <a href="frmUsuario.aspx">Usuario</a>
+    <a href="frmPedido.aspx"> Pedido</a>
+    <a href="frmAlmacen.aspx"> Almacen</a>
         <h3>REGISTRO DE PEDIDOS</h3>
         
         <form id="form1" runat="server">

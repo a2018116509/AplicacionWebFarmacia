@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Almacen.cs" />
     <Compile Include="DetallePedido.cs" />
     <Compile Include="Laboratorio.cs" />
     <Compile Include="Medicamento.cs" />
+    <Compile Include="MedicamentoAlmacen.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

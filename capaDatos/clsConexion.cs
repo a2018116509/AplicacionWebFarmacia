@@ -16,7 +16,7 @@ namespace capaDatos
         {
             this.servidor = "localhost";
             this.usuario = "root";
-            this.password = "1234";
+            this.password = "12345678";
             this.basedatos = "farmaciabd";
             this.cmd = new MySqlCommand();
         }
