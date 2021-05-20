@@ -20,7 +20,7 @@ namespace capaPresentacion
         private void mostrar()
         {
             Medicamento med = new Medicamento();
-            med.Descripcion = txtBuscar.Text;
+            med.NombreMed = txtBuscar.Text;
             gvRegis.DataSource = med.buscar();
             gvRegis.DataBind();
         }

@@ -98,7 +98,7 @@ namespace capaNegocio
         public DataTable buscar()
         {
             iniciarSP("buscarMedicamento");
-            parametroVarchar(descripcion, "buscar", 40);
+            parametroVarchar(nombremed, "buscar", 40);
             return mostrarData();
 
         }

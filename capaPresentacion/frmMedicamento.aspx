@@ -8,8 +8,10 @@
     <title></title>
 </head>
 <body>
-    <a href="frmLaboratorio.aspx">Laboratorios</a>&nbsp;
-    <a href="frmMedicamento.aspx">Medicamentos</a>
+    <a href="frmLaboratorio.aspx">Laboratorio</a>&nbsp;
+        <a href="frmMedicamento.aspx">Medicamentos</a>&nbsp;
+        <a href="frmUsuario.aspx">Usuarios</a>&nbsp;
+        <a href="frmPedido.aspx">Pedidos</a>
     <h3>REGISTRO DE MEDICAMENTO</h3>
     <form id="form1" runat="server">
         <div>
